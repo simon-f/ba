@@ -1,0 +1,169 @@
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel} 
+
+% for bibtex
+\usepackage{cite}
+
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{amssymb}
+
+\usepackage{url}
+\usepackage{sectsty} % Allows customizing section commands
+
+
+\usepackage{titlesec}
+\titleformat{\section}[block]{\Large\bfseries\filcenter}{}{1em}{}
+
+
+
+\usepackage{tikz}
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+
+
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0em}
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+
+\title{Relations between spacial objects} 
+\author{Simon Fromme}
+
+\date{\normalsize zuletzt aktualisiert am \today}
+ 
+\begin{document}
+
+\maketitle
+\newpage
+
+
+
+
+\section{Topological relations}
+\subsection{Prerequisites}
+
+To understand the following sections a number of definitions are given that can also be found in most elementary text books on topology and multidimensional analysis.
+
+Let $A$ be a subset of $\mathbb{R}^n$ ($n=1,2,3\dots$).
+
+% replace the supscript "o" with the appropriate circle symbol
+\textbf{Interior}\\
+The interior of a set $A$ is denoted by $A^o$. It is the union of all open subsets of $A$ and hence is a subset of $A$ itself. It is formally defined as
+\begin{align*}
+  A^o := \{ x\in \mathbb{R}^n : \exists \epsilon > 0 : U_{\epsilon}(x) \subseteq A \},
+\end{align*}
+where $U_{\epsilon}$ is 
+That means that for every point $x$ in $A^o$ there exists some arbitrary small sphere around $x$ that is still entirely inside of $A$. 
+
+\textbf{Boundary} \\
+The boundary of a set A is denoted by $\partial A$ and is formally defined as
+\begin{align*}
+  \partial A := \{ x \in \mathbb{R}^n : \forall \epsilon > 0 : U_{\epsilon}(x) \cap A \ne \varnothing \wedge U_{\epsilon}(x) \cap (\mathbb{R}^n \setminus A) \ne \varnothing    \}.
+\end{align*}c
+The idea of this definition is that an arbitrary small sphere around a point withing $\partial A$ intersects with both the set $A$ and its exterior $(\mathbb{R}^n \setminus A)$.
+
+When an object is represented in BRep the boundary $\partial A$ is thus equal to the given $n-1$ dimensional shell.  
+
+\textbf{Exterior} \\
+The exterior of a set $A$ is equivalent to the complement of $A$ denoted by $A^c$. Thus it holds
+\begin{align*}
+  A^c:=\{x\in \mathbb{R}^n:x\notin A\}
+\end{align*}
+
+
+As entities representing real world objects will naturally be closed.  
+
+To formalize topological relations between spacial objects different approaches were taken, one being the 4-Intersection Model which was later extended to a 9-Intersection Model. Since the latter will be used here it will be discussed in the following section.
+
+\subsection{The 4-Intersection Model}
+The 4-Intersection Model (4-IM) was described by M. J. Egenhofer and R. Franzosa in 1991 \cite{Egenhofer:1991:IJGIS} and makes use of point set theory. 
+
+
+Topological relations are handled as topological predicates and thus propositions formed with these predicates can only take the values \emph{true} or \emph{false} (e.g. the proposition ``object A \emph{touches} object B'' formed with the predicate \emph{touches}). 
+To overcome the limitations of human language the 4-IM defines a set of predicates as signatures of a 2x2 matrix defined as 
+\begin{align*}
+  I := \begin{pmatrix}
+    A^{o} \bigcap B^{o}        & A^{o} \bigcap \partial B  \\
+    \partial A \bigcap B^{o}  & \partial A \bigcap \partial B  \\
+  \end{pmatrix}.
+\end{align*}
+As each matrix element can either be empty ($\varnothing$) or non-empty ($\neg\varnothing$), $2^4 = 16$ different configuration of the matrix are possible. Eight of those configurations are identified as predicates that occur in real situations 
+
+\section{Directional Relations}
+
+Another kind of relation to distinguish are relations that take into considerations the relative directions between objects. Intuitive examples are predicates like \emph{left}, \emph{right}, \emph{above}, \emph{below}, \emph{eastOf}, ...
+
+In the context of city models one might be interested in all buildings west of an exhaust emitting factory since that is the prefered wind direction in central europe. A geometry based query for bridges might be based on the \emph{above} relationship relative to a specified street and one might want to verify the statement that riverbanks on the northern hemisphere erode more on the right handside relative to the direction of flow by querying for objects on this side of the river. 
+
+When speaking about directional relations it is important to specify a reference frame relative to which these relations are being considered. Following \cite{Retz-Schmidt:1988:VVS:46184.46189} Borrmann and Rank \cite{Borrmann:2009:AEI} distinguish three different kinds of reference frames, namely
+\begin{itemize}
+\item an \emph{intrincic} reference frame that is the defined by the inner orientation of the object such as the front side of a house or the right side of a river relative to the flow,
+\item a \emph{deitic} a reference frame that is dependent on the position of an external observer and 
+\item an \emph{extrinsic} reference frame that is defined by some external reference points. 
+\end{itemize}
+
+Taking into account the different meaning of the predicates \emph{left} and \emph{right} in a reference frame relative to an observer or relative to the frontside of a building it becomes clear that a reference frame must be specified when using either of those predicates.
+
+We thus define a directional relation as tuple $(D,RF)$ where  
+\begin{align*}
+ D \subseteq A \times B 
+\end{align*}
+with $A$ and $B$ being sets of objects and $RF$ a reference frame.
+
+Since directional relationships can be defined unambiguously only for point sized objects it is necessary to work out models to define those relations for spatially extended objects in higher dimensions. 
+
+Borrmann and Rank \cite{Borrmann:2009:AEI} list a number of previous approaches that were developed to address this problem for objects with at least one having dimension 1 or above. 
+
+\subsection{previous work}
+The most simple yet common approach is to use an objects center of gravity (or some other distinguished point) and to define directional relations between spatially extended objects as 0D-0D-relationships between those points. However, this sometimes yields counter intuitive results as seen in 
+
+
+
+
+
+
+
+
+
+\section{representations of 3D objects}
+
+\subsection{Boundary representation}
+
+\subsection{Octree}
+
+
+
+
+\section{Implementation of spacial relationships}
+The actual development of algorithms to compute spacial reationships between objects depends to a certain degree on the representation in which the input data is given. 
+
+Borrmann et al. \cite{Daum2014} demonstrated how 
+
+
+
+
+As the 3D city model of Karlsruhe was given in a BRep data format 
+
+
+
+
+
+\bibliography{literature}{}
+\bibliographystyle{plain}
+
+
+\end{document}
+
+ 
