@@ -169,7 +169,7 @@ Given the MBR of two objects: ($x^{(1)}_{\mathrm{min}}$, $y^{(1)}_{\mathrm{min}}
  
 Having defined $n$ relations between 1D intervals one obtains $n^d$ interval relations in a $d$-dimensional space that can then be used to define directional relations between the two objects. 
 
-Allen \cite{Allen:1983:MKT:182.358434} classifies 13 relations between (originally temporal) intervals in a 1D space, such as \textit{Interval $I_1$ is before Interval $I_2$} or \textit{$I_1$ overlaps $I_2$} that are used by other authors for classifications of 1D relationships. Out of those relations Guesgen \cite{guesgen1989spatial} uses a set of eight (\emph{left}, \emph{attached}, \emph{overlapping}, \emph{inside} and the reversed versions) to describe and to formally reason about spacial relationships in more-dimensional models. This is done by means of $d$-dimensional relationship tuples, since each dimension is considered to be independent from the others.
+Allen \cite{Allen:1983:MKT:182.358434} classifies 13 relations between (originally temporal) intervals in a 1D space, such as \textit{Interval $I_1$ is before Interval $I_2$} or \textit{$I_1$ overlaps $I_2$} that are used by other authors for classifications of 1D relationships. Out of those relations Guesgen \cite{guesgen1989spatial} uses a set of eight (\emph{left}, \emph{attached}, \emph{overlapping}, \emph{inside} and the reversed versions) to describe to and formally reason about spacial relationships in more-dimensional models. This is done by means of $d$-dimensional relationship tuples, since each dimension is considered to be independent from the others.
 
 \begin{figure}
   \centering
