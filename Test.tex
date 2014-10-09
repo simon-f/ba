@@ -55,6 +55,7 @@
 \newpage
 
 
+\section{Motivation}
 
 
 \section{Topological relations}
@@ -107,7 +108,7 @@ To overcome the limitations of human language the 4-IM defines a set of predicat
 \end{align*}
 As each matrix element can either be empty ($\varnothing$) or non-empty ($\neg\varnothing$), $2^4 = 16$ different configuration of the matrix are possible. Eight of those configurations are identified as predicates that occur in real situations 
 
-\section{Directional Relations}
+\section{Directional Relations}\label{sec:directional-relations}
 
 Another kind of relation to distinguish are relations that take into considerations the relative directions between objects. Intuitive examples are predicates like \emph{left}, \emph{right}, \emph{above}, \emph{below}, \emph{eastOf}, ...
 
@@ -147,7 +148,7 @@ The most simple yet common approach is to use an objects center of gravity (or s
 In a two-dimensional space Borrmann and Rank \cite{Borrmann:2009:AEI} distinguish two different approaches to define directional relations between point size objects: the \textit{cone-based} and the \textit{direction-based} model. 
 
 % TODO: insert original references for this model
-In the cone-based model the space around a point gets dissected into a number of equally sized partitions (usually 4 or 8) and the direction of a target point from a reference point is determined by the partition in which the latter is located. For the special case of four partitions this yields the relations: \emph{northOf}, \emph{southOf}, \emph{eastOf} and \emph{westOf}. The partitions are disjoint so that only one of the respective relationship can hold. In Figure \ref{fig:direction_cone_model_4} the point $B$ would be considered to be \emph{eastOf} point $A$ according to this model. 
+In the cone-based model the space around a point gets dissected into a number of equally sized partitions (usually 4 or 8) and the direction of a target point from 
 
 \begin{figure}
   \centering
@@ -169,32 +170,139 @@ Given the MBR of two objects: ($x^{(1)}_{\mathrm{min}}$, $y^{(1)}_{\mathrm{min}}
  
 Having defined $n$ relations between 1D intervals one obtains $n^d$ interval relations in a $d$-dimensional space that can then be used to define directional relations between the two objects. 
 
-Allen \cite{Allen:1983:MKT:182.358434} classifies 13 relations between (originally temporal) intervals in a 1D space, such as \textit{Interval $I_1$ is before Interval $I_2$} or \textit{$I_1$ overlaps $I_2$} that are used by other authors for classifications of 1D relationships. Out of those relations Guesgen \cite{guesgen1989spatial} uses a set of eight (\emph{left}, \emph{attached}, \emph{overlapping}, \emph{inside} and the reversed versions) to describe and to formally reason about spacial relationships in more-dimensional models. This is done by means of $d$-dimensional relationship tuples, since each dimension is considered to be independent from the others.
+Allen \cite{Allen:1983:MKT:182.358434} classifies 13 relations between (originally temporal) intervals in a 1D space, such as \textit{Interval $I_1$ is before Interval $I_2$} or \textit{$I_1$ overlaps $I_2$} that are used by other authors for classifications of 1D relationships. Out of those relations Guesgen \cite{guesgen1989spatial} uses a set of eight (\emph{left}, \emph{attached}, \emph{overlapping}, \emph{inside} and the reversed versions) to describe to and formally reason about spacial relationships in more-dimensional models. This is done by means of $d$-dimensional relationship tuples, since each dimension is considered to be independent from the others. 
+
+An example of this method is pictured in Figure \ref{fig:mbr}. If one sticks to the interval relations proposed by Guesgen one would describe the relations of $A$ to $B$ as the tuple (\emph{above}, \emph{overlapping}) where the first tuple entry refers to the x- and the second one to the y-direction. However, the \emph{overlapping} predicate is considered to be rather a topological relation in this thesis. 
 
 \begin{figure}
   \centering
   \def\svgwidth{20em}
   \import{img/}{mbr.eps_tex}
-  \caption{Using minimum bounding rectangles to define directional relations in 2D. The MBR are projected on both the x- and y-axis. Subsequently one-dimensional relations between the projection intervals $I^{(1)}_x$, $I^{(2)}_x$  and $I^{(1)}_y$, $I^{(2)}_y$ are evaluated independently.}
+  \caption{Using minimum bounding rectangles to define directional relations in 2D. The MBRs are projected on both the x- and y-axis. Subsequently one-dimensional relations between the projection intervals $I^{(1)}_x$, $I^{(2)}_x$  and $I^{(1)}_y$, $I^{(2)}_y$ are evaluated independently and are then combined in a tuple.}
 \label{fig:mbr}
 \end{figure}
 
-Papadias et al. \cite{papadias1995topological} use the whole set of Allen's 13 relations but a distinction between topological and directional relations is not being made. 
+Papadias et al. \cite{papadias1995topological} use the whole set of Allen's 13 relations thus obtaining 169 relations in 2D but a distinction between topological and directional relations is not being made. 
+
+Borrmann also mentions a model by Goyal \cite{goyal2000similarity} that parts the space around a reference object on the basis of its MBR and introduces a matrix that records in which segments a target object falls. This is easily extendable to three dimensions, however, Goyal does not assign names to the different matrix configurations making it unsuitable for a spacial query language.  
+
+Coming to the conclusion that little work has been put into developing models on directions in 3D space Borrmann \cite{Borrmann:2009:AEI} proposes two new models:  the \textit{projection based} and the \textit{half space model}. 
 
 
-\section{representations of 3D objects}
+\subsection{the projection-based directional model}
+Both models are suited for objects of any dimensions. Spacial relations are examined separately for each axis, thus no combined relations such as \emph{northEastOf} is being computed. In three dimensions six distinct relations are part of the model:
+\begin{table}[h!]
+  \begin{tabular}{cl}
+   \textbf{axis} & \textbf{relations} \\
+    x  & \emph{northOf}, \emph{southOf} \\
+    y  & \emph{eastOf}, \emph{westOf} \\
+    z  & \emph{above}, \emph{below}
+  \end{tabular}
+\end{table}
 
-\subsection{Boundary representation}
+The idea is to extrude the reference object in the direction of one axis (e.g. the x-axis for the \emph{northOf} relation) and to check for intersections with the extrusion. Borrmann distinguishes a relaxed and a strict version of these relations. For the ``relaxed'' version to hold it is sufficient for a target object to intersect with the extrusion of the reference object in the respective direction. For the ``strict'' version it is necessary for the target object to lay fully inside of the extrusion on the respective side of the axis. 
 
-\subsection{Octree}
+This can be formalized in the following way. 
+
+%% TODO: provide graphic for further explanation
+
+\textbf{relaxed}
+\begin{align*}
+  \mathrm{eastOf\_proj\_relaxed}(A,B) :\Leftrightarrow \exists a,b:a_y=b_y\wedge a_z=b_z\wedge a_x<b_x, \\
+  \mathrm{westOf\_proj\_relaxed}(A,B) :\Leftrightarrow \exists a,b:a_y=b_y\wedge a_z=b_z\wedge a_x>b_x, \\
+  \mathrm{northOf\_proj\_relaxed}(A,B) :\Leftrightarrow \exists a,b:a_x=b_x\wedge a_z=b_z\wedge a_y<b_y, \\
+  \mathrm{southOf\_proj\_relaxed}(A,B) :\Leftrightarrow \exists a,b:a_x=b_x\wedge a_z=b_z\wedge a_y>b_y, \\
+  \mathrm{above\_proj\_relaxed}(A,B) :\Leftrightarrow \exists a,b:a_x=b_x\wedge a_y=b_y\wedge a_z<b_z, \\
+  \mathrm{below\_proj\_relaxed}(A,B) :\Leftrightarrow \exists a,b:a_x=b_x\wedge a_y=b_y\wedge a_z>b_z. \\
+\end{align*}
+
+\textbf{strict}\footnote{It has to be noted that Borrmann made a mistake in his original publication \cite{Borrmann:2009:AEI} where at some points he mistakenly exchanged $a$ for $b$ in the definitions of the ``strict'' relations for the projection-based directional model. These rather apparent mistakes were corrected here.} 
+\begin{align*}
+  \mathrm{eastOf\_proj\_strict}(A,B) :\Leftrightarrow \forall b:&(\exists a:a_y=b_y\wedge a_z=b_z\wedge a_x<b_x) \wedge \\&(\not\exists a:a_y=b_y\wedge a_z=b_z\wedge a_x\ge b_x), \\
+  \mathrm{westOf\_proj\_strict}(A,B) :\Leftrightarrow \forall b:&(\exists a:a_y=b_y\wedge a_z=b_z\wedge a_x>b_x) \wedge \\&(\not\exists a:a_y=b_y\wedge a_z=b_z\wedge a_x\le b_x), \\
+  \mathrm{northOf\_proj\_strict}(A,B) :\Leftrightarrow \forall b:&(\exists a:a_x=b_x\wedge a_z=b_z\wedge a_y<b_y) \wedge \\&(\not\exists a:a_x=b_x\wedge a_z=b_z\wedge a_y\ge b_y), \\
+ \mathrm{southOf\_proj\_strict}(A,B) :\Leftrightarrow \forall b:&(\exists a:a_x=b_x\wedge a_z=b_z\wedge a_y>b_y) \wedge \\&(\not\exists a:a_x=b_x\wedge a_z=b_z\wedge a_y\le b_y), \\
+ \mathrm{above\_proj\_strict}(A,B) :\Leftrightarrow \forall b:&(\exists a:a_x=b_x\wedge a_y=b_y\wedge a_z<b_z) \wedge \\&(\not\exists a:a_x=b_x\wedge a_y=b_y\wedge a_z\ge b_z), \\
+ \mathrm{above\_proj\_strict}(A,B) :\Leftrightarrow \forall b:&(\exists a:a_x=b_x\wedge a_y=b_y\wedge a_z>b_z) \wedge \\&(\not\exists a:a_x=b_x\wedge a_y=b_y\wedge a_z\le b_z).
+\end{align*}
+
+\subsection{the half-space based model}\label{sec:half-space-based-model}
+In the half-space based model one does not consider the extrusion of an object but the entire half space in one direction when checking for intersection of the target with the reference object. If the target object lays completely inside the half-space (e.g. above an object) one considers the ``strict''  version of the relation to hold. In the ``relaxed'' version one does also allow for intersections of the target with the reference object as long there is for each point of the reference object a point of the target object that lays further in the direction of the specific relation. 
+
+
+\textit{\textbf{Example}: For the relation ``$B$ above\_hs\_relaxed $A$'' to hold it is necessary that for every point of $A$ there is at least one point of $B$ with a greater z-component. 
+}
+
+Borrmann consecutively arrives at the following formal definitions:
+
+
+\textbf{relaxed-version}
+\begin{align*}
+  \mathrm{eastOf\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_x<b_x,  \\
+  \mathrm{westOf\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_x>b_x,  \\
+  \mathrm{northOf\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_y<b_y, \\
+  \mathrm{southOf\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_y>b_y, \\
+  \mathrm{above\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_z<b_z,   \\
+  \mathrm{below\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_z>b_z. 
+\end{align*}
+ and
+\textbf{strict-version}
+\begin{align*}
+  \mathrm{eastOf\_hs\_strict}(A,B) :\Leftrightarrow \forall a,b: a_x<b_x,  \\
+  \mathrm{westOf\_hs\_strict}(A,B) :\Leftrightarrow \forall a,b: a_x>b_x,  \\
+  \mathrm{northOf\_hs\_strict}(A,B) :\Leftrightarrow \forall a,b: a_y<b_y, \\
+  \mathrm{southOf\_hs\_strict}(A,B) :\Leftrightarrow \forall a,b: a_y>b_y, \\
+  \mathrm{above\_hs\_strict}(A,B) :\Leftrightarrow \forall a,b: a_z<b_z,   \\
+  \mathrm{below\_hs\_strict}(A,B) :\Leftrightarrow \forall a,b: a_z>b_z. 
+\end{align*}
+
+\subsection{Implementation}
+To determine a set of directional relations to query the specific city model in this work and to decide about which underlying models to use for the implementation of each relation some of the specific characteristics of the city model Karlsruhe and its potential use, that do influence that choice, are being recapped.  
+
+\begin{enumerate}
+\item The city model used in this work is available in a fairly low level of detail (LoD2). This resolution does not allow for the modeling of separate floors or basements which makes it unnecessary to implement directional relations for the z-axis. However, if floors and basement are modeled as separate entities (e.g. in city models of higher resolution) such a query function would be desirable.
+
+Another consequence of this low level of detail is that considering the extrusion of an object when defining a particular directional relation is not very meaningful. This would have applications when querying for columns and walls \emph{above} a certain ceiling or for all building parts \emph{above} the floor plate. 
+
+Since a house is modeled in one or two parts only in the given city model the only reasonable queries the author can think of that would use this kind of relations would be queries for the roof of a building (\textit{above\_proj\_strict/relaxed} house\_base\_body) or the neighboring buildings in a specific direction (e.g. \textit{eastOf\_proj\_relaxed} building). These queries seem not important enough to implement them in the API.
+
+\item  As a city model will mostly be used in a way that is independent of the way one observes it (in contradiction to e.g. a virtual reality world for the purpose  of direct user interaction), it seems appropriate not to include relations that require a deitic reference frame as defined in section \ref{sec:directional-relations}. Thus relations of the kind \emph{leftOf} and \emph{rightOf} that depend upon the position and the view angle of the observer will be omitted.
+\end{enumerate}
+
+Hence in the actual implementation the set of the following relations
+\begin{itemize}
+\item \textit{eastOf\_hs\_relaxed},
+\item \textit{westOf\_hs\_relaxed},
+\item \textit{northOf\_hs\_relaxed},
+\item \textit{southOf\_hs\_relaxed},
+\end{itemize}
+as previously described in section \ref{sec:half-space-based-model} are being used. In a more detailed model it would be very useful to extend this set but due to the above reasons this does not seem adequate for the special case. 
+
+
+E.g. \textit{eastOf\_hs\_relaxed} $A$:
+true for all objects $O$ with $O_x^{\mathrm{max}} > A_x^{\mathrm{max}}$\\
+E.g. \textit{eastOf\_hs\_strict} $A$:
+true for all objects $O$ with $O_x^{\mathrm{min}} \ge A_x^{\mathrm{max}}$ 
 
 
 
 
+
+ 
 \section{Implementation of spacial relationships}
 The actual development of algorithms to compute spacial reationships between objects depends to a certain degree on the representation in which the input data is given. 
 
+According to the specific characteristics of the 3D city model of Karlsruhe different 
+
+
+
+
 Borrmann et al. \cite{Daum2014} demonstrated how 
+
+
+
+
+
 
 
 

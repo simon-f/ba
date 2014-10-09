@@ -55,7 +55,7 @@
     \put(-0.09,0.33){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$I^{(2)}_y$}}}%
     \put(0.44,-0.07){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$I^{(1)}_x$}}}%
     \put(0.61,-0.07){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$I^{(2)}_x$}}}%
-    \put(-0.01258652,0.9342291){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{y}}}%
+    \put(-0.02,0.9342291){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{y}}}%
   \end{picture}%
 \endgroup%
 \vspace{2em}
