@@ -18,7 +18,9 @@
 
 
 \usepackage{titlesec}
-\titleformat{\section}[block]{\Large\bfseries\filcenter}{}{1em}{}
+
+% center section titles and omit numbering
+% \titleformat{\section}[block]{\Large\bfseries\filcenter}{}{1em}{}
 
 
 
@@ -47,19 +49,21 @@
 \title{Relations between spacial objects} 
 \author{Simon Fromme}
 
-\date{\normalsize zuletzt aktualisiert am \today}
+\date{\normalsize edited on \today}
  
 \begin{document}
 
 \maketitle
 \newpage
-
+\tableofcontents
+\newpage
 
 \section{Motivation}
 
 
-\section{Topological relations}
-\subsection{Prerequisites}
+\section{Types of geometric relation}
+\subsection{Topological relations}
+\subsubsection{Prerequisites}
 
 To understand the following sections a number of definitions are given that can also be found in most elementary text books on topology and multidimensional analysis.
 
@@ -94,7 +98,7 @@ As entities representing real world objects will naturally be closed.
 
 To formalize topological relations between spacial objects different approaches were taken, one being the 4-Intersection Model which was later extended to a 9-Intersection Model. Since the latter will be used here it will be discussed in the following section.
 
-\subsection{The 4-Intersection Model}
+\subsubsection{The 4-Intersection Model}
 The 4-Intersection Model (4-IM) was described by M. J. Egenhofer and R. Franzosa in 1991 \cite{Egenhofer:1991:IJGIS} and makes use of point set theory. 
 
 
@@ -108,11 +112,22 @@ To overcome the limitations of human language the 4-IM defines a set of predicat
 \end{align*}
 As each matrix element can either be empty ($\varnothing$) or non-empty ($\neg\varnothing$), $2^4 = 16$ different configuration of the matrix are possible. Eight of those configurations are identified as predicates that occur in real situations 
 
-\section{Directional Relations}\label{sec:directional-relations}
+\subsection{Directional Relations}\label{sec:directional-relations}
 
 Another kind of relation to distinguish are relations that take into considerations the relative directions between objects. Intuitive examples are predicates like \emph{left}, \emph{right}, \emph{above}, \emph{below}, \emph{eastOf}, ...
 
 In the context of city models one might be interested in all buildings west of an exhaust emitting factory, since that is the prefered wind direction in central europe. A geometry based query for bridges might be based on the \emph{above} relationship relative to a specified street and one might want to verify the statement that riverbanks on the northern hemisphere erode more on the right handside relative to the direction of flow by querying for objects on this side of the river. 
+
+To decide whether a specific directional relation holds or to find all objects that are related to a given object in terms of a given relation with computational means, it is necessary to clearly define
+
+\begin{enumerate}
+\item a \emph{set of relations} to be supported by the program and
+\item \emph{underlying models} for these relations that the computer then uses to decide whether a relation does hold or not in a given spacial context. 
+\end{enumerate}
+
+For both questions a number of approaches exist, some of them presented in this work in a first step. 
+
+\subsubsection{formal definition}
 
 When speaking about directional relations it is important to specify a reference frame relative to which these relations are being considered. Following \cite{Retz-Schmidt:1988:VVS:46184.46189} Borrmann and Rank \cite{Borrmann:2009:AEI} distinguish three different kinds of reference frames, namely
 \begin{itemize}
@@ -123,7 +138,7 @@ When speaking about directional relations it is important to specify a reference
 
 Taking into account the different meaning of the predicates \emph{left} and \emph{right} in a reference frame relative to an observer or relative to the frontside of a building it becomes clear that a reference frame must be specified when using either of those predicates.
 
-We thus define a directional relation as tuple $(D,RF)$ where  
+We thus define a directional relation as a tuple $(D,RF)$ where  
 \begin{align*}
  D \subseteq A \times B 
 \end{align*}
@@ -133,7 +148,7 @@ Since directional relationships can be defined unambiguously only for point size
 
 Borrmann and Rank \cite{Borrmann:2009:AEI} list a number of previous approaches that were developed to address this problem for objects with at least one having dimension 1 or above.
 
-\subsection{previous work}
+\subsubsection{previous work}
 The most simple yet common approach is to use an objects center of gravity (or some other distinguished point) and to define directional relations between spatially extended objects as 0D-0D-relationships between those points. This is easy and unambiguous, however, it sometimes yields counter intuitive results as seen in Figure \ref{fig:center_gravity} where the center of gravity of $B$ is \emph{above} the center of gravity of $A$ although a person would probably classify the relationship the other way around. Thus using this simple approach might be easy to implement but sometimes lacks significance in complex scenarios.
 
 \begin{figure}
@@ -189,7 +204,7 @@ Borrmann also mentions a model by Goyal \cite{goyal2000similarity} that parts th
 Coming to the conclusion that little work has been put into developing models on directions in 3D space Borrmann \cite{Borrmann:2009:AEI} proposes two new models:  the \textit{projection based} and the \textit{half space model}. 
 
 
-\subsection{the projection-based directional model}
+\paragraph{the projection-based directional model}
 Both models are suited for objects of any dimensions. Spacial relations are examined separately for each axis, thus no combined relations such as \emph{northEastOf} is being computed. In three dimensions six distinct relations are part of the model:
 \begin{table}[h!]
   \begin{tabular}{cl}
@@ -201,6 +216,15 @@ Both models are suited for objects of any dimensions. Spacial relations are exam
 \end{table}
 
 The idea is to extrude the reference object in the direction of one axis (e.g. the x-axis for the \emph{northOf} relation) and to check for intersections with the extrusion. Borrmann distinguishes a relaxed and a strict version of these relations. For the ``relaxed'' version to hold it is sufficient for a target object to intersect with the extrusion of the reference object in the respective direction. For the ``strict'' version it is necessary for the target object to lay fully inside of the extrusion on the respective side of the axis. 
+
+\begin{figure}
+  \centering
+  \def\svgwidth{20em}
+  \import{img/}{direction-model.eps_tex}
+  \caption{direction-based model: According to the relaxed version of the \emph{above} relation the cubes $B$, $C$ and $D$ would be considered to be \emph{above} the gray object. According to the strict version only the cubes $B$ and $C$ would be. }
+\label{fig:direction-model}
+\end{figure}
+
 
 This can be formalized in the following way. 
 
@@ -226,9 +250,18 @@ This can be formalized in the following way.
  \mathrm{above\_proj\_strict}(A,B) :\Leftrightarrow \forall b:&(\exists a:a_x=b_x\wedge a_y=b_y\wedge a_z>b_z) \wedge \\&(\not\exists a:a_x=b_x\wedge a_y=b_y\wedge a_z\le b_z).
 \end{align*}
 
-\subsection{the half-space based model}\label{sec:half-space-based-model}
-In the half-space based model one does not consider the extrusion of an object but the entire half space in one direction when checking for intersection of the target with the reference object. If the target object lays completely inside the half-space (e.g. above an object) one considers the ``strict''  version of the relation to hold. In the ``relaxed'' version one does also allow for intersections of the target with the reference object as long there is for each point of the reference object a point of the target object that lays further in the direction of the specific relation. 
+\paragraph{the half-space based model}\label{sec:half-space-based-model}
+In the half-space based model one does not consider the extrusion of an object but the entire half space in one direction when checking for intersection of the target with the reference object. If the target object lays completely inside the half-space (e.g. above an object) one considers the ``strict''  version of the relation to hold. 
 
+In the ``relaxed'' version one does also allow for intersections of the target with the reference object requiring only part of the object to lay further in the direction of the specific relation. 
+
+\begin{figure}
+  \centering
+  \def\svgwidth{20em}
+  \import{img/}{hf-model.eps_tex}
+  \caption{half-space based model: According to the relaxed version of the \emph{above} relation the cubes $A$, $B$ and $C$ would be considered to be \emph{above} the gray object. According to the strict version only the cubes $A$ and $B$ would be. \\ In contradiction to the direction based model $C$ would not be considered to be \emph{above} (relaxed/strict) the gray object }
+\label{fig:direction-model}
+\end{figure}
 
 \textit{\textbf{Example}: For the relation ``$B$ above\_hs\_relaxed $A$'' to hold it is necessary that for every point of $A$ there is at least one point of $B$ with a greater z-component. 
 }
@@ -238,12 +271,12 @@ Borrmann consecutively arrives at the following formal definitions:
 
 \textbf{relaxed-version}
 \begin{align*}
-  \mathrm{eastOf\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_x<b_x,  \\
-  \mathrm{westOf\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_x>b_x,  \\
-  \mathrm{northOf\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_y<b_y, \\
-  \mathrm{southOf\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_y>b_y, \\
-  \mathrm{above\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_z<b_z,   \\
-  \mathrm{below\_hs\_relaxed}(A,B) :\Leftrightarrow \forall a:\exists b: a_z>b_z. 
+  \mathrm{eastOf\_hs\_relaxed}(A,B) :\Leftrightarrow \exists b: \forall a: a_x<b_x,  \\
+  \mathrm{westOf\_hs\_relaxed}(A,B) :\Leftrightarrow \exists b: \forall a: a_x>b_x,  \\
+  \mathrm{northOf\_hs\_relaxed}(A,B) :\Leftrightarrow \exists b: \forall a: a_y<b_y, \\
+  \mathrm{southOf\_hs\_relaxed}(A,B) :\Leftrightarrow \exists b: \forall a: a_y>b_y, \\
+  \mathrm{above\_hs\_relaxed}(A,B) :\Leftrightarrow \exists b: \forall a: a_z<b_z,   \\
+  \mathrm{below\_hs\_relaxed}(A,B) :\Leftrightarrow \exists b: \forall a: a_z>b_z.
 \end{align*}
  and
 \textbf{strict-version}
@@ -256,7 +289,10 @@ Borrmann consecutively arrives at the following formal definitions:
   \mathrm{below\_hs\_strict}(A,B) :\Leftrightarrow \forall a,b: a_z>b_z. 
 \end{align*}
 
-\subsection{Implementation}
+\section{Implementation}
+\subsection{Directional relations}
+\subsubsection{prerequisites}
+
 To determine a set of directional relations to query the specific city model in this work and to decide about which underlying models to use for the implementation of each relation some of the specific characteristics of the city model Karlsruhe and its potential use, that do influence that choice, are being recapped.  
 
 \begin{enumerate}
@@ -278,42 +314,18 @@ Hence in the actual implementation the set of the following relations
 \end{itemize}
 as previously described in section \ref{sec:half-space-based-model} are being used. In a more detailed model it would be very useful to extend this set but due to the above reasons this does not seem adequate for the special case. 
 
+Given the input data in a BRep representation (Borrmann \cite{Borrmann:2009:AEI} discusses the case for spatial objects in Octree representation) the implementation is fairly easy. If $V_{O_1}$ and $V_{O_2}$ denote the set  the set of vertices in 3D space of the spatial objects $O_1$ and $O_2$ the following holds.
 
-E.g. \textit{eastOf\_hs\_relaxed} $A$:
-true for all objects $O$ with $O_x^{\mathrm{max}} > A_x^{\mathrm{max}}$\\
-E.g. \textit{eastOf\_hs\_strict} $A$:
-true for all objects $O$ with $O_x^{\mathrm{min}} \ge A_x^{\mathrm{max}}$ 
+\begin{align*}
+  \mathrm{eastOf\_hs\_relaxed}(O_1,O_2) &= \begin{cases} true, & \max\{v_x:v\in V_{O_{2}}\} > \max\{v_x:v\in V_{O_1}\} \\ false, & \mathrm{otherwise} \end{cases} \\
+  \mathrm{westOf\_hs\_relaxed}(O_1,O_2) &= \begin{cases} true, & \min\{v_x:v\in V_{O_{2}}\} < \min\{v_x:v\in V_{O_1}\} \\ false, & \mathrm{otherwise} \end{cases} \\
+  \mathrm{northOf\_hs\_relaxed}(O_1,O_2) &= \begin{cases} true, & \max\{v_y:v\in V_{O_{2}}\} > \max\{v_y:v\in V_{O_1}\} \\ false, & \mathrm{otherwise} \end{cases} \\
+  \mathrm{southOf\_hs\_relaxed}(O_1,O_2) &= \begin{cases} true, & \min\{v_y:v\in V_{O_{2}}\} < \min\{v_y:v\in V_{O_1}\} \\ false, & \mathrm{otherwise} \end{cases} \\
+\end{align*}
 
-
-
-
-
- 
-\section{Implementation of spacial relationships}
-The actual development of algorithms to compute spacial reationships between objects depends to a certain degree on the representation in which the input data is given. 
-
-According to the specific characteristics of the 3D city model of Karlsruhe different 
-
-
-
-
-Borrmann et al. \cite{Daum2014} demonstrated how 
-
-
-
-
-
-
-
-
-
-As the 3D city model of Karlsruhe was given in a BRep data format 
-
-
-
-
-
+For optimization purposes the minimum and maximum of the x-, y- and z-component of the vertices of a geometry are saved after parsing to avoid repeated sorting for   multiple directional queries of a kind. 
 \bibliography{literature}{}
+
 \bibliographystyle{plain}
 
 
