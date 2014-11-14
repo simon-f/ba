@@ -1,6 +1,6 @@
 %% Creator: Inkscape inkscape 0.48.4, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'hf-model.eps' (pdf, eps, ps)
+%% Accompanies image file 'topology.eps' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{368.00301006bp}%
+    \setlength{\unitlength}{484.41409302bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,14 +48,12 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.71555972)%
-    \put(0,0){\includegraphics[width=\unitlength]{hf-model.eps}}%
-    \put(0.08895107,0.53477822){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{A}}}%
-    \put(0.37807915,0.5921686){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{B}}}%
-    \put(0.48112087,0.53477903){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{C}}}%
-    \put(0.59112087,0.38477903){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{D}}}%
-    \put(0.22590691,0.03){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{x}}}%	
-    \put(0.12416836,0.13391156){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{y}}}%
-    \put(0.0323421,0.22882405){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{z}}}%
+  \begin{picture}(1,0.81571569)%
+    \put(0,0){\includegraphics[width=\unitlength]{topology.eps}}%
+    \put(0.68299802,0.816309){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$\partial A$}}}%
+    \put(0.95275221,0.57039931){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$A^{\circ}$}}}%
+    \put(-0.02,0.85755829){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$A^c$}}}%
+    \put(-0.021609,0.18312314){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{$A$
+}}}%
   \end{picture}%
 \endgroup%

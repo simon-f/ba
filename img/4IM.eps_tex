@@ -1,0 +1,77 @@
+%% Creator: Inkscape inkscape 0.48.4, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file '4IM.eps' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{1060.9bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.2)%
+    \put(0,0){\includegraphics[width=\unitlength]{4IM.eps}}%
+    \put(0.0180,0.20) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$A$}}%
+    \put(0.1427,0.2) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$A$}}%
+    \put(0.4023,0.20500000000000002){\color[rgb]{0,0,0}\makebox(0,0)[lb]{$A=B$}}%
+    \put(0.5172,0.2) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$A$}}%
+    \put(0.6420,0.2) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$A$}}%
+    \put(0.8300,0.2) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$A$}}%
+    \put(0.8920,0.2) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$A$}}%
+    \put(0.7667,0.12) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$B$}}%
+    \put(0.1900,0.16) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$B$}}%
+    \put(0.3100,0.16) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$A$}}%
+    \put(0.2676,0.2) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$B$}}%
+    \put(0.5500,0.115){\color[rgb]{0,0,0}\makebox(0,0)[lb]{$B$}}%
+    \put(0.6700,0.15) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$B$}}%
+    \put(0.9500,0.10) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$B$}}%
+    \put(0.085,0.072) {\color[rgb]{0,0,0}\makebox(0,0)[lb]{$B$}}%
+    \put(0.01873563, 0.02){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{disjoint}}}%
+    \put(0.14391239, 0.02){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{contains}}}%
+    \put(0.28020327, 0.02){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{inside}}}%
+    \put(0.40387188, 0.02){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{equal}}}%
+    \put(0.5342631,  0.02){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{meet}}}%
+    \put(0.654160305,0.02){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{covers}}}%
+    \put(0.760677979,0.02){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{coveredBy}}}%
+    \put(0.90195652, 0.02){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{overlap}}}%
+  \end{picture}%
+\endgroup%
